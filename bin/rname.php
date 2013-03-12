@@ -1,6 +1,15 @@
 #!/usr/bin/env php
 <?php
-require_once dirname(__DIR__).DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+$autoloads = array(
+  __DIR__ . '/../vendor/autoload.php',
+  __DIR__ . '/../../../autoload.php'
+);
+foreach($autoloads as $autoload) {
+	$autoload = str_replace('/', DIRECTORY_SEPARATOR, $autoload);
+	if (file_exists($autoload)) {
+		require_once($autoload);
+	}
+} 
 
 /* define cli options */
 $command = new \Commando\Command();
