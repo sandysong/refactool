@@ -1,0 +1,11 @@
+{
+    "require": {
+        "nikic/php-parser": "*",
+	"nategood/commando": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Refactool": "lib/"
+        }
+    }
+}
