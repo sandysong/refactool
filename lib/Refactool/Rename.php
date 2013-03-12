@@ -33,6 +33,9 @@ class Refactool_Rename extends PHPParser_NodeVisitorAbstract {
 		if ($otherStmts) {
 			throw new Exception("file has ".count($otherStmts).' other statments');
 		}
+		if (!$nodes) {
+			throw new Exception("empty file");
+		}
 	}
 	public function enterNode(PHPParser_Node $node) {
 	}
@@ -109,7 +112,7 @@ class Refactool_Rename extends PHPParser_NodeVisitorAbstract {
 	}
 	public function formatName($name) {
 		if ($this->_option['standard'] == 'yaf_controller') {
-			$parts = explode('_', $name);
+			$parts = explode('_', preg_replace('/Controller$/','',$name));
 			$parts = array_map('strtolower', $parts);
 			$parts = array_map('ucfirst', $parts);
 			$name = implode('_', $parts).'Controller';

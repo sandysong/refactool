@@ -1,5 +1,7 @@
 {
+    "name": "sandysong/refactool",
     "require": {
+        "php": ">=5.3.0",
         "nikic/php-parser": "*",
 	"nategood/commando": "*"
     },
@@ -7,5 +9,6 @@
         "psr-0": {
             "Refactool": "lib/"
         }
-    }
+    },
+    "bin": ["bin/rname","bin/rname.php"]
 }
