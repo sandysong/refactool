@@ -49,19 +49,19 @@ class Refactool_Rename extends PHPParser_NodeVisitorAbstract {
 		if ($node instanceof PHPParser_Node_Stmt_Class || $node instanceof PHPParser_Node_Stmt_Interface ) {
 			$name = preg_replace($pattern, $replace, $node->name);
 			if ($name) {
-				$node->name = $name;
+				$node->name = $this->formatName($name);
 			}
 			if ($node->extends) {
 				$name = preg_replace($pattern, $replace, $node->extends->parts[0]);
 				if ($name) {
-					$node->extends->parts[0] = $name;
+					$node->extends->parts[0] = $this->formatName($name);
 				}
 			}
 			if ($node->implements) {
 				foreach ($node->implements as $k => $v) {
 					$name = preg_replace($pattern, $replace, $v->parts[0]);
 					if ($name) {
-						$node->implements[$k]->parts[0] = $name;
+						$node->implements[$k]->parts[0] = $this->formatName($name);
 					}
 				}
 			}
@@ -69,7 +69,7 @@ class Refactool_Rename extends PHPParser_NodeVisitorAbstract {
 		if ($node instanceof PHPParser_Node_Expr_StaticCall) {
 			$name = preg_replace($pattern, $replace, $node->class->parts[0]);
 			if ($name) {
-				$node->class->parts[0] = $name;
+				$node->class->parts[0] = $this->formatName($name);
 			}
 		}
 
@@ -106,5 +106,14 @@ class Refactool_Rename extends PHPParser_NodeVisitorAbstract {
 			break;
 		}
 		return $filename;
+	}
+	public function formatName($name) {
+		if ($this->_option['standard'] == 'yaf_controller') {
+			$parts = explode('_', $name);
+			$parts = array_map('strtolower', $parts);
+			$parts = array_map('ucfirst', $parts);
+			$name = implode('_', $parts).'Controller';
+		}
+		return $name;
 	}
 }
