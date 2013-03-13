@@ -51,19 +51,19 @@ class Refactool_Rename extends PHPParser_NodeVisitorAbstract {
 		$replace = $this->_option['replace'];
 		if ($node instanceof PHPParser_Node_Stmt_Class || $node instanceof PHPParser_Node_Stmt_Interface ) {
 			$name = preg_replace($pattern, $replace, $node->name);
-			if ($name) {
+			if ($name && $name != $node->name) {
 				$node->name = $this->formatName($name);
 			}
 			if ($node->extends) {
 				$name = preg_replace($pattern, $replace, $node->extends->parts[0]);
-				if ($name) {
+				if ($name && $name != $node->extends->parts[0]) {
 					$node->extends->parts[0] = $this->formatName($name);
 				}
 			}
 			if ($node->implements) {
 				foreach ($node->implements as $k => $v) {
 					$name = preg_replace($pattern, $replace, $v->parts[0]);
-					if ($name) {
+					if ($name && $name != $v->parts[0]) {
 						$node->implements[$k]->parts[0] = $this->formatName($name);
 					}
 				}
@@ -71,7 +71,7 @@ class Refactool_Rename extends PHPParser_NodeVisitorAbstract {
 		}
 		if ($node instanceof PHPParser_Node_Expr_StaticCall) {
 			$name = preg_replace($pattern, $replace, $node->class->parts[0]);
-			if ($name) {
+			if ($name && $name != $node->class->parts[0]) {
 				$node->class->parts[0] = $this->formatName($name);
 			}
 		}
