@@ -7,9 +7,10 @@
 *refactool require php5.3 or higher*
 
 refactool is [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md) compliant and can be installed using [Composer](http://getcomposer.org/).  Add `sandysong/refactool` to your `composer.json`
-
-    "require": {
-        "sandysong/refactool": "*"
+    {
+        "require": {
+            "sandysong/refactool": "*"
+        }
     }
     
 If you're new to Composer...
